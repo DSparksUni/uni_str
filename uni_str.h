@@ -45,6 +45,7 @@ typedef struct uni_string_t {
 #endif //UNI_NO_SOO
 
 nodiscard uni_string uni_string_new();
+nodiscard uni_string uni_string_from_cstr(const char*);
 
 nodiscard size_t uni_string_size(uni_string);
 nodiscard size_t uni_string_capacity(uni_string);
@@ -70,6 +71,17 @@ nodiscard uni_string uni_string_new() {
     //Set the last bit of the string as a flag
     //1: SS0 or 0: Normal
     str.small[UNI_SMALL_BUFFER_SIZE - 1] |= 0x80;
+
+    return str;
+}
+
+nodiscard uni_string uni_string_from_cstr(const char* cstr) {
+    uni_string str = uni_string_new();
+
+    if(strlen(cstr) < UNI_SMALL_BUFFER_SIZE - 1)
+        strcpy(str.small, cstr);
+    else {
+    }
 
     return str;
 }
